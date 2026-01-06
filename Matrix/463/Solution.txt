@@ -1,0 +1,32 @@
+class Solution {
+    int rows, cols;
+    boolean[][] visited;
+
+    public int islandPerimeter(int[][] grid){
+        rows = grid.length;
+        cols = grid[0].length;
+        visited = new boolean[rows][cols];
+        for(int i=0; i<rows; i++){
+            for(int j=0; j<cols; j++){
+                if(grid[i][j] == 1){
+                    return dfs(grid, i, j);
+                }
+            }
+        }
+        return 0;
+    }
+
+    public int dfs(int[][] grid, int row, int col){
+        if(row<0 || col<0 || row>=rows || col>=cols) return 1;
+        if(grid[row][col] == 0) return 1;
+        if(visited[row][col]) return 0;
+        visited[row][col] = true;
+        int perimeter = 0;
+        perimeter += dfs(grid, row+1, col);
+        perimeter += dfs(grid, row, col-1);
+        perimeter += dfs(grid, row-1, col);
+        perimeter += dfs(grid, row, col+1);
+        return perimeter;
+    }
+   
+}
